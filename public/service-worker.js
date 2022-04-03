@@ -1,8 +1,10 @@
 importScripts('/workbox-sw.js');
 
 workbox.routing.registerRoute(
-  /\/$/,
-  workbox.strategies.cacheFirst()
+  ({ event }) => {  return event.request.destination === "document" },
+  workbox.strategies.staleWhileRevalidate({
+    cacheName: 'entry-cache'
+  })
 );
 
 workbox.routing.registerRoute(
